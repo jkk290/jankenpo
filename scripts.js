@@ -10,7 +10,13 @@ function getComputerChoice() {
     }
 }
 console.log(getComputerChoice())
+
 // Get the choice from the player
+function getHumanChoice() {
+    let humanChoice = prompt("Enter your choice: Rock, paper, or Scissors");
+    return humanChoice;
+}
+console.log(getHumanChoice());
 // Store and track the players score
 // Store and track the computers score
 // store and track rounds
