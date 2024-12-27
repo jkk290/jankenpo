@@ -1,4 +1,15 @@
 // Randomly determine which choice the computer will have
+function getComputerChoice() {
+    let computerChoice = Math.floor(Math.random() * 100);
+    if (computerChoice > 33 && computerChoice <= 66) {
+        return "Rock"
+    } else if (computerChoice <= 33) {
+        return "Paper"
+    } else {
+        return "Scissors"
+    }
+}
+console.log(getComputerChoice())
 // Get the choice from the player
 // Store and track the players score
 // Store and track the computers score
