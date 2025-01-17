@@ -1,86 +1,130 @@
-// Randomly determine which choice the computer will have
+let computerChoice = "";
+
 function getComputerChoice() {
-    let computerChoice = Math.floor(Math.random() * 100);
-    if (computerChoice > 33 && computerChoice <= 66) {
-        return "Rock"
-    } else if (computerChoice <= 33) {
-        return "Paper"
+    let randomNum = Math.floor(Math.random() * 100);
+    if (randomNum > 33 && randomNum <= 66) {
+        computerChoice = "Rock";
+    } else if (randomNum <= 33) {
+        computerChoice = "Paper";
     } else {
-        return "Scissors"
+        computerChoice = "Scissors";
     }
+    return computerChoice;
 }
 
-// Get the choice from the player
-function getHumanChoice() {
-    let humanChoice = prompt("Enter your choice: Rock, paper, or Scissors");
-    return humanChoice;
-}
-// console.log(getHumanChoice());
-
-
-// Repeat comparing steps until winner
-// Increase round by 1 after each win
-// Replay game until 5 rounds complete
-// Announce overall winner after 5 rounds
 
 function playGame() {
-// Store and track the players score
+
     let humanScore = 0;
 
-// Store and track the computers score
     let computerScore = 0;
 
-// Store and track rounds
-// Compare the players choice to computers choice
-// If player choice wins, increment player score
-// If computer choice wins, increment computer score
+    const body = document.querySelector("body");
+    const roundResult = document.createElement("div");
+    const currentScore = document.createElement("div");
+    const winner = document.createElement("div");
+
+    function announceWinner () {        
+        if (humanScore > computerScore) {
+            winner.textContent = "Congratulations, you won the game!"
+            body.append(winner);
+        } else {
+            winner.textContent = "The computer won the game!"
+            body.append(winner);
+         }        
+    };
+
     function playRound(humanChoice, computerChoice) {
         if (humanChoice === "rock" && computerChoice === "paper") {
-            console.log("You lost, you had chose rock and the computer chose paper.");
+            roundResult.textContent = "You lost the round, you had chose rock and the computer chose paper.";
+            body.append(roundResult);
             computerScore++;
-            console.log("Current score: You (" + humanScore + ") - Computer (" + computerScore + ")" );
+            currentScore.textContent = "Current score: You (" + humanScore + ") - Computer (" + computerScore + ")";
+            body.append(currentScore);
+            if (humanScore === 5 || computerScore === 5) {
+                announceWinner();
+            }
         } else if (humanChoice === "paper" && computerChoice === "scissors") {
-            console.log("You lost, you had chose paper and the computer chose scissors.");
+            roundResult.textContent = "You lost the round, you had chose paper and the computer chose scissors.";
+            body.append(roundResult);
             computerScore++;
-            console.log("Current score: You (" + humanScore + ") - Computer (" + computerScore + ")" );
+            currentScore.textContent = "Current score: You (" + humanScore + ") - Computer (" + computerScore + ")";
+            body.append(currentScore);
+            if (humanScore === 5 || computerScore === 5) {
+                announceWinner();
+            }
         } else if (humanChoice === "scissors" && computerChoice === "rock") {
-            console.log("You lost, you had chose scissors and the computer chose rock.");
+            roundResult.textContent = "You lost the round, you had chose scissors and the computer chose rock.";
+            body.append(roundResult);
             computerScore++;
-            console.log("Current score: You (" + humanScore + ") - Computer (" + computerScore + ")" );
+            currentScore.textContent = "Current score: You (" + humanScore + ") - Computer (" + computerScore + ")";
+            body.append(currentScore);
+            if (humanScore === 5 || computerScore === 5) {
+                announceWinner();
+            }
         } else if (humanChoice === "rock" && computerChoice === "scissors") {
-            console.log("You won, you had chose rock and the computer chose scissors.");
+            roundResult.textContent = "You won the round, you had chose rock and the computer chose scissors.";
+            body.append(roundResult);
             humanScore++;
-            console.log("Current score: You (" + humanScore + ") - Computer (" + computerScore + ")" );
+            currentScore.textContent = "Current score: You (" + humanScore + ") - Computer (" + computerScore + ")";
+            body.append(currentScore);
+            if (humanScore === 5 || computerScore === 5) {
+                announceWinner();
+            }
         } else if (humanChoice === "paper" && computerChoice === "rock") {
-            console.log("You won, you had chose paper and the computer chose rock.");
+            roundResult.textContent = "You won the round, you had chose paper and the computer chose rock.";
+            body.append(roundResult);
             humanScore++;
-            console.log("Current score: You (" + humanScore + ") - Computer (" + computerScore + ")" );
+            currentScore.textContent = "Current score: You (" + humanScore + ") - Computer (" + computerScore + ")";
+            body.append(currentScore);
+            if (humanScore === 5 || computerScore === 5) {
+                announceWinner();
+            }
         } else if (humanChoice === "scissors" && computerChoice === "paper") {
-            console.log("You won, you had chose scissors and the computer chose paper.");
+            roundResult.textContent = "You won the round, you had chose scissors and the computer chose paper.";
+            body.append(roundResult);
             humanScore++;
-            console.log("Current score: You (" + humanScore + ") - Computer (" + computerScore + ")" );
+            currentScore.textContent = "Current score: You (" + humanScore + ") - Computer (" + computerScore + ")";
+            body.append(currentScore);
+            if (humanScore === 5 || computerScore === 5) {
+                announceWinner();
+            }
         } else {
-            console.log("You both made the same selection.")
+            roundResult.textContent = "You both made the same selection.";
+            currentScore.textContent = "Current score: You (" + humanScore + ") - Computer (" + computerScore + ")";
+            body.append(currentScore);
         }
     }
 
+    const rockBtn = document.createElement("button");
+    rockBtn.textContent = "Rock";
+    body.append(rockBtn);
 
-    let currentRound = 1;
+    rockBtn.addEventListener("click", function() {
+        humanChoice = "Rock"
+        getComputerChoice();
+        playRound(humanChoice.toLowerCase(), computerChoice.toLowerCase());
+    });
 
-    while (currentRound < 6) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        console.log("Round " + currentRound);
-        playRound(humanSelection.toLowerCase(),computerSelection.toLowerCase());
-        currentRound++;
-    } 
+    const paperBtn = document.createElement("button");
+    paperBtn.textContent = "Paper";
+    body.append(paperBtn);
 
-    if (humanScore > computerScore) {
-        console.log("You beat the computer!");
-    } else if (humanScore === computerScore) {
-        console.log("You tied with the computer.");
-    } else {
-        console.log("You lost to the computer.");
-    }
+    paperBtn.addEventListener("click", function() {
+        humanChoice = "Paper"
+        getComputerChoice();
+        playRound(humanChoice.toLowerCase(), computerChoice.toLowerCase());
+    });
+
+    const scissorsBtn = document.createElement("button");
+    scissorsBtn.textContent = "Scissors";
+    body.append(scissorsBtn);
+
+    scissorsBtn.addEventListener("click", function() {
+        humanChoice = "Scissors"
+        getComputerChoice();
+        playRound(humanChoice.toLowerCase(), computerChoice.toLowerCase());
+    });
 }
+
 playGame();
